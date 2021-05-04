@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create post</title>
+</head>
+<body>
+    <h1>Create Post</h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'create_post' %}"
+          method="post">
+    {% csrf_token %}
+
+    <label> Title:</label>
+    <br>
+        <input type="text" name="title">
+    <br>
+    <label> Body:</label>
+    <br>
+        <textarea name="body"> </textarea>
+    <br>
+    <label> Date:</label>
+        <input type="date" name="date">
+    <br>
+    <label> User:</label>
+        <input type="text" name="username" placeholder="Enter your username">
+    <br>
+    <input type="submit" value="Submit">
+</form>
+    <h2> Posts: </h2>
+    {% if posts %}
+
+        {% for post in posts %}
+        <a href="{% url 'post-detail' post.id %}">{{post.title}}</a>
+            <br>
+        {% endfor %}
+
+    {% else %}
+        <p>No posts are available.</p>
+    {% endif %}
+</body>
+</html>

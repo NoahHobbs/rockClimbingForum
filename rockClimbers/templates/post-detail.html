@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Detail</title>
+</head>
+<body>
+    <h1>{{post.title}}</h1>
+    <p>{{post.body}}</p>
+    <p>{{post.date}}</p>
+
+    <strong><p>{{post.username}}</p></strong>
+    <br>
+    <h2>Comments:</h2>
+    {% if post.comments.count %}
+        {% for comment in post.comments.all %}
+        <h3>{{comment.username}} said:</h3>
+
+        <h4 style="margin-left: 40px">{{comment.title}}</h4>
+        <p style="margin-left: 40px">{{comment.body}}</p>
+        <p style="margin-left: 40px">{{comment.date}}</p>
+        {% endfor %}
+
+
+
+
+    {% else %}
+        <p>No comments are available.</p>
+    {% endif %}
+    {% if error %}
+    <b style="color: red">{{error}}</b>
+    {% endif %}
+    <h4>Create comment:</h4>
+     <form action="{% url 'create_comment' post.id %}"
+            method="post">
+                {% csrf_token %}
+                <label> Title:</label>
+                <br>
+                    <input type="text" name="title">
+                <br>
+                <label> Body:</label>
+                <br>
+                    <textarea name="body"></textarea>
+                <br>
+                <label> Date:</label>
+                    <input type="date" name="date">
+                <br>
+                <label> User:</label>
+                    <input type="text" name="username" placeholder="Enter your username">
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+</body>
+
+</html>
